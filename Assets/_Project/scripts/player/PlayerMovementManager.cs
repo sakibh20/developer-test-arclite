@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 public class PlayerMovementManager : MonoBehaviour
 {
-    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 8f;
     [SerializeField] private float stoppingDistance = 0.1f;
 
-    [Header("Targets")]
+    [Space]
     [SerializeField] private List<Transform> targets = new List<Transform>();
     [SerializeField] private bool loopMovement = true;
 
@@ -17,7 +16,6 @@ public class PlayerMovementManager : MonoBehaviour
     private bool _isMoving;
 
     public event Action<int> OnTargetReached;
-    public event Action OnLoopCompleted;
 
     private void OnEnable()
     {
@@ -69,7 +67,6 @@ public class PlayerMovementManager : MonoBehaviour
 
             if (_currentTargetIndex >= targets.Count)
             {
-                OnLoopCompleted?.Invoke();
                 if (loopMovement)
                     _currentTargetIndex = 0;
                 else
