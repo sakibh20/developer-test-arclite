@@ -1774,7 +1774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1228218249
@@ -2090,9 +2090,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe5c770c3d58b84db9f348e15a4d634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allTabButtonPrefabs:
-  - {fileID: 3012540001031964382, guid: ae79623b8f05d274693048e49c9b04f9, type: 3}
-  - {fileID: 3012540001031964382, guid: 21bb59f972799504fa337166742a3566, type: 3}
+  tabSetups:
+  - tabPrefab: {fileID: 43520714027137788, guid: 125cb9574fabfe446a8672168d49a8b2, type: 3}
+    targetRenderer: {fileID: 1743815568}
+  - tabPrefab: {fileID: 3019574722504151680, guid: 6980496f7c789694591f3caceb982a4e, type: 3}
+    targetRenderer: {fileID: 2051749303}
   tabButtonParent: {fileID: 1474415950}
   tabContentParent: {fileID: 162646177}
   tabItemParentPrefab: {fileID: 4710179256937481584, guid: fb934e4e686057645b97a94f230a9553, type: 3}
@@ -2420,6 +2422,11 @@ Transform:
   - {fileID: 1497189376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &1743815568 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7082338132480168175, guid: 3474341bb1461134bbd6e7790557b362, type: 3}
+  m_PrefabInstance: {fileID: 2193304524005749330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1924800523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2523,6 +2530,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a6722b4ba366c4abdc0e3dfa559cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!23 &2051749303 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 740172369583914224, guid: b8b8262a5ab1c7d4c818030dc9014896, type: 3}
+  m_PrefabInstance: {fileID: 4774128148514640737}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2193304524005749330
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2545,7 +2557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1749954095534589681, guid: 3474341bb1461134bbd6e7790557b362, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1749954095534589681, guid: 3474341bb1461134bbd6e7790557b362, type: 3}
       propertyPath: m_LocalRotation.w
