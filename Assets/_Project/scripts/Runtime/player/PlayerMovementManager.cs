@@ -11,6 +11,9 @@ public class PlayerMovementManager : MonoBehaviour
     private Transform _currentTarget;
     private bool _isMoving;
 
+    private Vector3 _targetPos;
+    private Vector3 _direction;
+
     public event Action OnTargetReached;
 
     private void OnEnable()
@@ -46,11 +49,11 @@ public class PlayerMovementManager : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        Vector3 targetPos = _currentTarget.position;
-        Vector3 direction = (targetPos - transform.position);
-        direction.y = 0f;
+        _targetPos = _currentTarget.position;
+        _direction = _targetPos - transform.position;
+        _direction.y = 0f;
 
-        if (direction.magnitude <= stoppingDistance)
+        if (_direction.magnitude <= stoppingDistance)
         {
             _isMoving = false;
             OnTargetReached?.Invoke();
@@ -58,19 +61,17 @@ public class PlayerMovementManager : MonoBehaviour
         }
 
         // Move
-        transform.position += direction.normalized * moveSpeed * Time.deltaTime;
+        transform.position += _direction.normalized * moveSpeed * Time.deltaTime;
 
         // Rotate only on Y axis
-        RotateTowards(targetPos);
+        RotateTowards();
     }
 
-    private void RotateTowards(Vector3 target)
+    private void RotateTowards()
     {
-        Vector3 dir = (target - transform.position);
-        dir.y = 0f;
-        if (dir == Vector3.zero) return;
+        if (_direction == Vector3.zero) return;
 
-        Quaternion targetRot = Quaternion.LookRotation(dir);
+        Quaternion targetRot = Quaternion.LookRotation(_direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
     }
 

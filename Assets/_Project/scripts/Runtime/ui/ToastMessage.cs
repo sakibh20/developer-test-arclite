@@ -18,6 +18,9 @@ public class ToastMessage : MonoBehaviour
     
     private CanvasGroup _toastPanel;
 
+    private Vector3 _startPos;
+    private Vector3 _endPos;
+
     public static ToastMessage Instance;
 
     private void Awake()
@@ -65,8 +68,8 @@ public class ToastMessage : MonoBehaviour
 
         // Step 2: Float up & Fade out simultaneously
         timer = 0f;
-        Vector3 startPos = _initialPosition;
-        Vector3 endPos = _initialPosition + Vector3.up * floatUpDistance;
+        _startPos = _initialPosition;
+        _endPos = _initialPosition + Vector3.up * floatUpDistance;
 
         while (timer < showDuration)
         {
@@ -74,7 +77,7 @@ public class ToastMessage : MonoBehaviour
             float t = timer / showDuration;
 
             // move upward
-            _toastPanel.transform.localPosition = Vector3.Lerp(startPos, endPos, t);
+            _toastPanel.transform.localPosition = Vector3.Lerp(_startPos, _endPos, t);
 
             // fade out gradually (start fading out immediately)
             _toastPanel.alpha = Mathf.Lerp(1f, 0f, t);
