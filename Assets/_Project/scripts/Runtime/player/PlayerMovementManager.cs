@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 
 public class PlayerMovementManager : MonoBehaviour
 {
@@ -8,15 +7,11 @@ public class PlayerMovementManager : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 8f;
     [SerializeField] private float stoppingDistance = 0.1f;
-    
-    [Space]
-    [SerializeField] private List<Transform> targets = new List<Transform>();
-    [SerializeField] private bool loopMovement = true;
 
-    private int _currentTargetIndex;
+    private Transform _currentTarget;
     private bool _isMoving;
 
-    public event Action<int> OnTargetReached;
+    public event Action OnTargetReached;
 
     private void OnEnable()
     {
@@ -30,54 +25,39 @@ public class PlayerMovementManager : MonoBehaviour
 
     private void Update()
     {
-        if (StateManager.CurrentState != GameState.IsPlaying)
+        if (StateManager.CurrentState != GameState.IsPlaying || !_isMoving || !_currentTarget)
             return;
 
-        if (_isMoving && targets.Count > 0)
-        {
-            MoveTowardsTarget();
-        }
+        MoveTowardsTarget();
     }
 
-    [ContextMenu("StartMovement")]
-    public void StartMovement()
+    public void SetNextTarget(Transform nextTarget)
     {
-        if (targets.Count == 0)
-        {
-            Debug.LogWarning("No targets found.");
-            return;
-        }
+        _currentTarget = nextTarget;
 
-        _currentTargetIndex = 0;
-        _isMoving = true;
+        if (_currentTarget)
+        {
+            _isMoving = true;
+            MoveTowardsTarget();
+        }
+        
+        else _isMoving = false;
     }
 
     private void MoveTowardsTarget()
     {
-        Transform currentTarget = targets[_currentTargetIndex];
-        if (!currentTarget) return;
-
-        Vector3 targetPos = currentTarget.position;
+        Vector3 targetPos = _currentTarget.position;
         Vector3 direction = (targetPos - transform.position);
         direction.y = 0f;
 
         if (direction.magnitude <= stoppingDistance)
         {
-            OnTargetReached?.Invoke(_currentTargetIndex);
-            _currentTargetIndex++;
-
-            if (_currentTargetIndex >= targets.Count)
-            {
-                if (loopMovement)
-                    _currentTargetIndex = 0;
-                else
-                    _isMoving = false;
-            }
-
+            _isMoving = false;
+            OnTargetReached?.Invoke();
             return;
         }
 
-        // Move to target
+        // Move
         transform.position += direction.normalized * moveSpeed * Time.deltaTime;
 
         // Rotate only on Y axis
@@ -87,7 +67,7 @@ public class PlayerMovementManager : MonoBehaviour
     private void RotateTowards(Vector3 target)
     {
         Vector3 dir = (target - transform.position);
-        dir.y = 0f; // resets Y axis diff so it only rotates on other
+        dir.y = 0f;
         if (dir == Vector3.zero) return;
 
         Quaternion targetRot = Quaternion.LookRotation(dir);
@@ -97,12 +77,8 @@ public class PlayerMovementManager : MonoBehaviour
     private void HandleGameStateChanged(GameState newState)
     {
         if (newState == GameState.Paused)
-        {
             _isMoving = false;
-        }
-        else if (newState == GameState.IsPlaying && targets.Count > 0)
-        {
+        else if (newState == GameState.IsPlaying && _currentTarget != null)
             _isMoving = true;
-        }
     }
 }
