@@ -3,10 +3,11 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
+    [Header("Script References")]
     [SerializeField] private PlayerMovementManager playerMovementManager;
-    [SerializeField] private string destinationReachedMsg;
     
-    [Space]
+    [Space, Header("Ui References")]
+    [SerializeField] private string destinationReachedMsg;
     [SerializeField] private Button startButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button closeButton;

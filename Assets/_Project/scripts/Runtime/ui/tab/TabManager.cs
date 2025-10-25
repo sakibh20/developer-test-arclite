@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class TabManager : MonoBehaviour
 {
+    [Header("Script References")]
     [SerializeField] private List<TabSetupData> tabSetups;
     [SerializeField] private ToggleGroup tabButtonParent;
     [SerializeField] private Transform tabContentParent;

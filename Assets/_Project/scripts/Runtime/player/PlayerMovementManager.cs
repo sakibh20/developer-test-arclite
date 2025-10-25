@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 public class PlayerMovementManager : MonoBehaviour
 {
+    [Header("Customization Params")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 8f;
     [SerializeField] private float stoppingDistance = 0.1f;
-
+    
     [Space]
     [SerializeField] private List<Transform> targets = new List<Transform>();
     [SerializeField] private bool loopMovement = true;

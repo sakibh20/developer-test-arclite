@@ -5,9 +5,10 @@ using System.Collections;
 [RequireComponent(typeof(CanvasGroup))]
 public class ToastMessage : MonoBehaviour
 {
+    [Header("Ui Refs")]
     [SerializeField] private TextMeshProUGUI messageText;
 
-    [Space]
+    [Space, Header("Customization")]
     [SerializeField] private float fadeDuration = 0.3f;
     [SerializeField] private float floatUpDistance = 10f;
     [SerializeField] private float showDuration = 2f;

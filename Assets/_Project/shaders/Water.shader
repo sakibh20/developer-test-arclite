@@ -57,5 +57,5 @@ Shader "Custom/Water"
     }
 }
 
-// Note: I used LLM here. I understand shader code, can edit some with research but can't myself write from scratch.
+// Note: I used LLM here. I understand shader code a bit, can edit some with research but can't myself write from scratch.
 // This is one area I intend to improve next.
