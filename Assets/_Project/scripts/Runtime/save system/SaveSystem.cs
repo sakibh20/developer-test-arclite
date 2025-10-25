@@ -7,8 +7,6 @@ public static class SaveSystem
     
     public static void Save<T>(string key, T value)
     {
-        string fullKey = GetFullKey(key);
-
         if (value == null)
         {
             Debug.LogWarning($"SaveSystem: Trying to save null value for key {key}");
@@ -16,7 +14,7 @@ public static class SaveSystem
         }
 
         string json = JsonUtility.ToJson(new Wrapper<T>(value));
-        PlayerPrefs.SetString(fullKey, json);
+        PlayerPrefs.SetString(GetFullKey(key), json);
         PlayerPrefs.Save();
     }
     
