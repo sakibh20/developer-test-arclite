@@ -7,24 +7,49 @@ public class TabContentItem : MonoBehaviour
 {
     [SerializeField] private Color32 color;
     [SerializeField] private Image background;
-    private Renderer _targetRenderer;
-
+    private TabContext _context;
     private Toggle _toggle;
+    
+    private Coroutine _colorCoroutine;
 
-    public void Initialize(Renderer target, ToggleGroup group)
+    public event Action OnItemSelected;
+
+    // Init
+    public void Initialize(TabContext context, ToggleGroup group)
     {
-        _targetRenderer = target;
+        _context = context;
         _toggle = GetComponent<Toggle>();
         _toggle.group = group;
-
         background.color = color;
+        _toggle.onValueChanged.AddListener(OnToggleChanged);
     }
+
     
-    public void OnClick()
+    // Cleanup
+    private void OnDestroy()
     {
-        if (_targetRenderer)
-        {
-            ColorUtils.ApplyThemeTint(_targetRenderer, color, 1);
-        }
+        _toggle.onValueChanged.RemoveListener(OnToggleChanged);
+    }
+
+    // Listens to Toggle value change
+    private void OnToggleChanged(bool isOn)
+    {
+        if (!isOn) return;
+        if (_context == null) return;
+        
+        // Stop any ongoing color transition
+        if (_colorCoroutine != null)
+            StopCoroutine(_colorCoroutine);
+
+        // Start new color transition
+        DynamicColorManager.Instance.ChangeColor(_context.TargetRenderer, color, 0.5f);
+
+        OnItemSelected?.Invoke();
+    }
+
+    // Handle on select
+    public void Select()
+    {
+        _toggle.isOn = true;
     }
 }

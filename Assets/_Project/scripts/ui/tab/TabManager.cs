@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class TabManager : MonoBehaviour
 {
-    [SerializeField] private List<TabButton> allTabButtonPrefabs;
+    [SerializeField] private List<TabSetupData> tabSetups;
     [SerializeField] private ToggleGroup tabButtonParent;
     [SerializeField] private Transform tabContentParent;
     [SerializeField] private TabContentParent tabItemParentPrefab;
@@ -26,39 +26,39 @@ public class TabManager : MonoBehaviour
 
     private void GenerateTabs()
     {
-        if (allTabButtonPrefabs == null || allTabButtonPrefabs.Count == 0)
+        if (tabSetups == null || tabSetups.Count == 0)
         {
-            Debug.LogWarning("TabManager: No TabButton prefabs assigned!");
+            Debug.LogWarning("TabManager: No tab setups assigned!");
             return;
         }
 
-        foreach (var tabPrefab in allTabButtonPrefabs)
+        foreach (var setup in tabSetups)
         {
-            // Instantiate tab button
-            TabButton newTab = Instantiate(tabPrefab, tabButtonParent.transform);
-            newTab.Initialize(tabButtonParent, tabContentParent, tabItemParentPrefab);
+            TabButton newTab = Instantiate(setup.tabPrefab, tabButtonParent.transform);
+            
+            newTab.Initialize(tabButtonParent, tabContentParent, tabItemParentPrefab, new TabContext(setup.targetRenderer));
 
-            // Subscribe to on-click or toggle events
             newTab.OnTabSelected += HandleTabSelected;
-
             _instantiatedTabButtons.Add(newTab);
         }
 
-        // Activate the first tab by default
         if (_instantiatedTabButtons.Count > 0)
-        {
             _instantiatedTabButtons[0].Select();
-        }
     }
 
     private void HandleTabSelected(TabButton selectedTab)
     {
-        Debug.Log("HandleTabSelected");
-        // Deactivate others
         foreach (var tab in _instantiatedTabButtons)
         {
             if (tab != selectedTab)
                 tab.Deselect();
         }
     }
+}
+
+[System.Serializable]
+public class TabSetupData
+{
+    public TabButton tabPrefab;
+    public Renderer targetRenderer;
 }

@@ -17,6 +17,7 @@ public class UiManager : MonoBehaviour
         InitGameView();
     }
 
+    // Init
     private void OnEnable()
     {
         playerMovementManager.OnTargetReached += HandleOnTargetReached;
@@ -26,6 +27,7 @@ public class UiManager : MonoBehaviour
         closeButton.onClick.AddListener(OnClickClose);
     }
 
+    // Cleanup
     private void OnDisable()
     {
         startButton.onClick.RemoveListener(OnClickStart);
@@ -33,6 +35,7 @@ public class UiManager : MonoBehaviour
         closeButton.onClick.RemoveListener(OnClickClose);
     }
 
+    // Landing view
     private void InitGameView()
     {
         UpdateSettingsPanelVisibility(false);
@@ -48,6 +51,8 @@ public class UiManager : MonoBehaviour
     [ContextMenu("OnClickStart")]
     private void OnClickStart()
     {
+        if(StateManager.CurrentState != GameState.Started) return;
+        
         settingsButton.gameObject.SetActive(true);
         startButton.gameObject.SetActive(false);
         UpdateSettingsPanelVisibility(false);

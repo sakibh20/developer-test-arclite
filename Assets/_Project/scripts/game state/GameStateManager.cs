@@ -3,14 +3,22 @@ using UnityEngine;
 
 public enum GameState
 {
+    Undefined,
+    Started,
     Paused,
-    IsPlaying
+    IsPlaying,
+    Ended
 }
 
 public class StateManager : MonoBehaviour
 {
     public static GameState CurrentState { get; private set; } = GameState.Paused;
     public static event Action<GameState> OnGameStateChanged;
+
+    private void Start()
+    {
+        SetState(GameState.Started);
+    }
 
     public static void SetState(GameState newState)
     {

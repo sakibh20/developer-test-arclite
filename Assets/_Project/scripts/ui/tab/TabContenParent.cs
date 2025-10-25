@@ -6,16 +6,35 @@ using UnityEngine.UI;
 public class TabContentParent : MonoBehaviour
 {
     private readonly List<TabContentItem> _spawnedItems = new();
+    private string _tabKey;
 
-    public void Setup(List<TabContentItem> itemPrefab, Renderer targetRenderer)
+    public void Setup(List<TabContentItem> itemPrefabs, TabContext context, string tabKey)
     {
+        _tabKey = tabKey;
         ToggleGroup group = GetComponent<ToggleGroup>();
-        
-        for (int i = 0; i < itemPrefab.Count; i++)
+
+        // Generate content items and init them
+        for (int i = 0; i < itemPrefabs.Count; i++)
         {
-            var itemInstance = Instantiate(itemPrefab[i], transform);
-            itemInstance.Initialize(targetRenderer, group);
+            int index = i;
+            var itemInstance = Instantiate(itemPrefabs[i], transform);
+            itemInstance.Initialize(context, group);
+            
+            itemInstance.OnItemSelected += () => OnItemSelected(index);
             _spawnedItems.Add(itemInstance);
         }
+
+        // Load saved preferences
+        int savedIndex = TabSelectionSaver.LoadSelection(_tabKey);
+        if (savedIndex >= 0 && savedIndex < _spawnedItems.Count)
+        {
+            _spawnedItems[savedIndex].Select();
+        }
+    }
+
+    // Handle On Select
+    private void OnItemSelected(int index)
+    {
+        TabSelectionSaver.SaveSelection(_tabKey, index);
     }
 }
