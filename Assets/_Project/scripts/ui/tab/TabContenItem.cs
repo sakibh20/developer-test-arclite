@@ -9,6 +9,8 @@ public class TabContentItem : MonoBehaviour
     [SerializeField] private Image background;
     private TabContext _context;
     private Toggle _toggle;
+    
+    private Coroutine _colorCoroutine;
 
     public event Action OnItemSelected;
 
@@ -35,7 +37,12 @@ public class TabContentItem : MonoBehaviour
         if (!isOn) return;
         if (_context == null) return;
         
-        ColorUtils.ApplyThemeTint(_context.TargetRenderer, color, 1);
+        // Stop any ongoing color transition
+        if (_colorCoroutine != null)
+            StopCoroutine(_colorCoroutine);
+
+        // Start new color transition
+        DynamicColorManager.Instance.ChangeColor(_context.TargetRenderer, color, 0.5f);
 
         OnItemSelected?.Invoke();
     }
