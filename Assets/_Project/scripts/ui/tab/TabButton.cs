@@ -27,6 +27,7 @@ public class TabButton : MonoBehaviour
 
     private bool _isInitialized;
 
+    // Init
     public void Initialize(ToggleGroup toggleGroup, Transform contentParent, TabContentParent tabItemParentPrefab, TabContext context)
     {
         if (_isInitialized) return;
@@ -46,7 +47,8 @@ public class TabButton : MonoBehaviour
         
         _isInitialized = true;
     }
-
+    
+    // Listens to Toggle value change
     private void OnToggleChanged(bool isOn)
     {
         titleText.color = isOn ? activeColor : inactiveColor;
@@ -67,7 +69,7 @@ public class TabButton : MonoBehaviour
                 _instantiatedContentParent.gameObject.SetActive(false);
         }
     }
-
+    
     private void GenerateItems()
     {
         _instantiatedContentParent = Instantiate(_tabItemParentPrefab, _tabContentParent);

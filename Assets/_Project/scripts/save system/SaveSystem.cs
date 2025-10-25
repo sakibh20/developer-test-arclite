@@ -63,3 +63,6 @@ public static class SaveSystem
         public Wrapper(T value) => Value = value;
     }
 }
+
+// Took some help from LLM to make it use generic
+// Don't always generics. So, sometime forgets syntax

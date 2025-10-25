@@ -86,7 +86,7 @@ public class PlayerMovementManager : MonoBehaviour
     private void RotateTowards(Vector3 target)
     {
         Vector3 dir = (target - transform.position);
-        dir.y = 0f;
+        dir.y = 0f; // resets Y axis diff so it only rotates on other
         if (dir == Vector3.zero) return;
 
         Quaternion targetRot = Quaternion.LookRotation(dir);

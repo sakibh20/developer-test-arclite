@@ -12,6 +12,7 @@ public class TabContentItem : MonoBehaviour
 
     public event Action OnItemSelected;
 
+    // Init
     public void Initialize(TabContext context, ToggleGroup group)
     {
         _context = context;
@@ -21,11 +22,14 @@ public class TabContentItem : MonoBehaviour
         _toggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
+    
+    // Cleanup
     private void OnDestroy()
     {
         _toggle.onValueChanged.RemoveListener(OnToggleChanged);
     }
 
+    // Listens to Toggle value change
     private void OnToggleChanged(bool isOn)
     {
         if (!isOn) return;
@@ -36,6 +40,7 @@ public class TabContentItem : MonoBehaviour
         OnItemSelected?.Invoke();
     }
 
+    // Handle on select
     public void Select()
     {
         _toggle.isOn = true;

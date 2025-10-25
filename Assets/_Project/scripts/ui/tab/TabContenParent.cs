@@ -13,6 +13,7 @@ public class TabContentParent : MonoBehaviour
         _tabKey = tabKey;
         ToggleGroup group = GetComponent<ToggleGroup>();
 
+        // Generate content items and init them
         for (int i = 0; i < itemPrefabs.Count; i++)
         {
             int index = i;
@@ -23,6 +24,7 @@ public class TabContentParent : MonoBehaviour
             _spawnedItems.Add(itemInstance);
         }
 
+        // Load saved preferences
         int savedIndex = TabSelectionSaver.LoadSelection(_tabKey);
         if (savedIndex >= 0 && savedIndex < _spawnedItems.Count)
         {
@@ -30,6 +32,7 @@ public class TabContentParent : MonoBehaviour
         }
     }
 
+    // Handle On Select
     private void OnItemSelected(int index)
     {
         TabSelectionSaver.SaveSelection(_tabKey, index);
