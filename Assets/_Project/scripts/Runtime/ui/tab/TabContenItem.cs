@@ -23,7 +23,6 @@ public class TabContentItem : MonoBehaviour
         background.color = color;
         _toggle.onValueChanged.AddListener(OnToggleChanged);
     }
-
     
     // Cleanup
     private void OnDestroy()

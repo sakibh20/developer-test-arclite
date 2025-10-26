@@ -47,6 +47,10 @@ public class TabContentParent : MonoBehaviour
             _spawnedItems[savedIndex].Select();
         }
     }
+    
+    // TODO: make scroll system virtualized or recycled
+    // I noticed the instruction to make items virtualized or recycled
+    // Didn't do that yet. It had some difficulties that I couldn't solve in this short time.
 
     // Handle On Select
     private void OnItemSelected(int index)
