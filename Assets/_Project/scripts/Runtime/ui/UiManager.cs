@@ -3,10 +3,7 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
-    [SerializeField] private PlayerMovementManager playerMovementManager;
-    [SerializeField] private string destinationReachedMsg;
-    
-    [Space]
+    [Space, Header("Ui References")]
     [SerializeField] private Button startButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button closeButton;
@@ -20,8 +17,6 @@ public class UiManager : MonoBehaviour
     // Init
     private void OnEnable()
     {
-        playerMovementManager.OnTargetReached += HandleOnTargetReached;
-        
         startButton.onClick.AddListener(OnClickStart);
         settingsButton.onClick.AddListener(OnClickSettings);
         closeButton.onClick.AddListener(OnClickClose);
@@ -41,11 +36,6 @@ public class UiManager : MonoBehaviour
         UpdateSettingsPanelVisibility(false);
         settingsButton.gameObject.SetActive(false);
         startButton.gameObject.SetActive(true);
-    }
-
-    private void HandleOnTargetReached(int targetNo)
-    {
-        ToastMessage.Instance.ShowToastMessage($"{destinationReachedMsg} {targetNo}");
     }
 
     [ContextMenu("OnClickStart")]

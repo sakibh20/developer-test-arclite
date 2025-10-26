@@ -81,7 +81,7 @@ public class TabButton : MonoBehaviour
     [ContextMenu("Select")]
     public void Select()
     {
-        Debug.Log("Select");
+        //Debug.Log("Select");
         _toggle.isOn = true;
     }
     public void Deselect()
