@@ -42,7 +42,7 @@ public class TargetFeeder : MonoBehaviour
 
     private void HandleTargetReached()
     {
-        ToastMessage.Instance.ShowToastMessage($"{destinationReachedMsg} {_currentIndex}");
+        ToastMessage.Instance.ShowToastMessage($"{destinationReachedMsg} {_currentIndex-1}");
         
         FeedNextTarget();
     }

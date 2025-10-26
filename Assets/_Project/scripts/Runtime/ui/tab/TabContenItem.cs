@@ -23,12 +23,12 @@ public class TabContentItem : MonoBehaviour
         background.color = color;
         _toggle.onValueChanged.AddListener(OnToggleChanged);
     }
-
     
     // Cleanup
     private void OnDestroy()
     {
-        _toggle.onValueChanged.RemoveListener(OnToggleChanged);
+        if(_toggle)
+            _toggle.onValueChanged.RemoveListener(OnToggleChanged);
     }
 
     // Listens to Toggle value change
@@ -51,5 +51,11 @@ public class TabContentItem : MonoBehaviour
     public void Select()
     {
         _toggle.isOn = true;
+    }
+    
+    public void ApplyFromTemplate(TabContentItem template)
+    {
+        color = template.color;
+        background.color = color;
     }
 }
