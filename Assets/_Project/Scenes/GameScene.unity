@@ -2088,6 +2088,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 34010165}
     m_Modifications:
+    - target: {fileID: 58333419439765488, guid: 65f35c9db22b4b2409dfe0a391e12841, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2589455240762675476, guid: 65f35c9db22b4b2409dfe0a391e12841, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
